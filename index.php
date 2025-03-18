@@ -20,8 +20,9 @@
 </html>
 
 <?php
+    session_start();
     include("database.php");
-
+    
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST["username"];
         $password = $_POST["password"];
@@ -40,7 +41,8 @@
             }
 
             if(password_verify($password,$row["password"])){
-                echo "登入成功!!<br>";
+                $_SESSION["username"] = $username;
+                header("Location: mainpage.php");
             }
             else{
                 echo "登入失敗!!<br>";
