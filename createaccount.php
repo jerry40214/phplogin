@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,18 +16,17 @@
         <label>密碼:</label><br>
         <input type="password" name="password"><br>
         <input type="submit" name="submit" value="提交">
-        <a href="index.php">返回</a>
+        <input type="submit" name="back" value="返回">
     </form>
 </body>
 </html>
-
 <?php
     include("database.php");
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $username = $_POST["username"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
+    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
+        $username = htmlspecialchars($_POST["username"],ENT_QUOTES,"UTF-8");
+        $email = htmlspecialchars($_POST["email"],ENT_QUOTES,"UTF-8");
+        $password = htmlspecialchars($_POST["password"],ENT_QUOTES,"UTF-8");
         $hash = password_hash($password,PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO users (name,email,password) 
@@ -42,6 +42,11 @@
             }
             mysqli_stmt_close($stmt);
         }
+    }
+    elseif($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["back"])){
+        mysqli_close($conn);
+        header("Location: index.php");
+        exit();
     }
 
     mysqli_close($conn);
