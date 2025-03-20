@@ -61,6 +61,9 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="myarticles.php" method="post">
+        <input type="submit" name="myarticles" value="我的文章">
+    </form>
     <form action="mainpage.php" method="post">
         <label>發表文章</label><br>
         <input type="text" name="content"><br>
